@@ -18,13 +18,13 @@ func printResponse(bytes []byte) {
 	case datamsg.ADD_ITEM_MESSAGE:
 		response, err := p.ParseAddItem()
 		if err != nil {
-			log.Debug().
+			log.Error().
 				Str("response", string(bytes)).
 				Str("kind", string(datamsg.ADD_ITEM_MESSAGE)).
 				Err(err).
 				Msg("bad response")
 		} else if response.Error != nil {
-			log.Info().
+			log.Error().
 				Str("key", response.Key).
 				Str("error", *response.Error).
 				Msg("cannot add item")
@@ -36,13 +36,13 @@ func printResponse(bytes []byte) {
 	case datamsg.REMOVE_ITEM_MESSAGE:
 		response, err := p.ParseRemoveItem()
 		if err != nil {
-			log.Debug().
+			log.Error().
 				Str("response", string(bytes)).
 				Str("kind", string(datamsg.REMOVE_ITEM_MESSAGE)).
 				Err(err).
 				Msg("bad response")
 		} else if response.Error != nil {
-			log.Info().
+			log.Error().
 				Str("key", response.Key).
 				Str("error", *response.Error).
 				Msg("cannot remove item")
@@ -54,13 +54,13 @@ func printResponse(bytes []byte) {
 	case datamsg.GET_ITEM_MESSAGE:
 		response, err := p.ParseGetItem()
 		if err != nil {
-			log.Debug().
+			log.Error().
 				Str("response", string(bytes)).
 				Str("kind", string(datamsg.GET_ITEM_MESSAGE)).
 				Err(err).
 				Msg("bad response")
 		} else if response.Error != nil {
-			log.Info().
+			log.Error().
 				Str("key", response.Key).
 				Str("error", *response.Error).
 				Msg("cannot retrieve item")
@@ -73,7 +73,7 @@ func printResponse(bytes []byte) {
 	case datamsg.GET_ALL_ITEMS_MESSAGE:
 		response, err := p.ParseGetAllItems()
 		if err != nil {
-			log.Debug().
+			log.Error().
 				Str("response", string(bytes)).
 				Str("kind", string(datamsg.GET_ALL_ITEMS_MESSAGE)).
 				Err(err).

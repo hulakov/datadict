@@ -11,13 +11,18 @@ import (
 )
 
 func commandToJson(str string) ([]byte, error) {
+	var kind datamsg.MessageKind
+	var args []string
 	cc := strings.Split(str, ":")
-	if len(cc) != 2 {
+	switch len(cc) {
+	case 1:
+		kind = datamsg.MessageKind(cc[0])
+	case 2:
+		kind = datamsg.MessageKind(cc[0])
+		args = strings.Split(cc[1], ",")
+	default:
 		return nil, errors.New("expected command format <cmd>:<arg1>,...,<argN>")
 	}
-
-	kind := datamsg.MessageKind(cc[0])
-	args := strings.Split(cc[1], ",")
 
 	switch kind {
 	case datamsg.ADD_ITEM_MESSAGE:
@@ -64,12 +69,12 @@ func commandToJson(str string) ([]byte, error) {
 
 	case datamsg.GET_ALL_ITEMS_MESSAGE:
 		if len(args) != 0 {
-			return nil, fmt.Errorf("expected command format %s:<key>,<value>", datamsg.GET_ITEM_MESSAGE)
+			return nil, fmt.Errorf("expected command format %s:<key>,<value>", datamsg.GET_ALL_ITEMS_MESSAGE)
 		}
 		log.Info().
 			Msg("get all items")
 		return json.Marshal(datamsg.GetAllItemsMessageRequest{
-			BaseMessageRequest: datamsg.BaseMessageRequest{Kind: datamsg.GET_ITEM_MESSAGE},
+			BaseMessageRequest: datamsg.BaseMessageRequest{Kind: datamsg.GET_ALL_ITEMS_MESSAGE},
 		})
 
 	default:
