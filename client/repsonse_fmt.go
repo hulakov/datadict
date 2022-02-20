@@ -81,7 +81,7 @@ func printResponse(bytes []byte) {
 		} else {
 			log.Info().
 				Str("items", fmt.Sprintf("%v", response.Items)).
-				Msg("item was retrieved")
+				Msg("items were retrieved")
 		}
 
 	}
